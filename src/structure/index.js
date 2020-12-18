@@ -8,8 +8,13 @@ const {bufferToString, stringToBuffer} = require("../utilities");
 class Structure extends Tag {
     constructor (tagname, taglist, program = null, datatype = null, keepAlive = 0) {
         super(tagname, program, datatype, keepAlive);
+        this.updateTaglist(taglist);
+    }
+
+    updateTaglist(taglist) {
         this._taglist = taglist;
-        this._template = taglist.getTemplateByTag(tagname, program);
+        const tag = this.state.tag;
+        this._template = taglist ? taglist.getTemplateByTag(tag.name, tag.program) : null;
         if (this._template) super.type = CIP.DataTypes.Types.STRUCT;
     }
 
